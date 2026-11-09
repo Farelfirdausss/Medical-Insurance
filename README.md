@@ -1,43 +1,247 @@
-# REPOSITORY DATASET MACHINE LEARNING
+# Medical Insurance Cost Prediction
 
-## Deskripsi
+End-to-end Machine Learning project untuk memprediksi **biaya asuransi kesehatan (`charges`)** berdasarkan karakteristik peserta seperti usia, jenis kelamin, BMI, jumlah anak, status merokok, dan wilayah tempat tinggal.
 
-Repository ini berisi kumpulan dataset yang diperoleh dari Kaggle untuk keperluan pembelajaran dan identifikasi jenis permasalahan dalam Machine Learning. Dataset dikelompokkan menjadi tiga kategori, yaitu Binary Classification, Multiclass Classification, dan Multilabel Classification.
+Project ini menggunakan beberapa algoritma regresi dan memilih model dengan performa terbaik berdasarkan hasil evaluasi.
 
-## 1. Binary Classification
+---
 
-Binary Classification merupakan metode Machine Learning yang digunakan untuk mengelompokkan data ke dalam dua kelas atau kategori.
+## 📊 Dataset
 
-| No. | Nama Dataset                         | Variabel Target | Jenis Machine Learning | Sumber                                                                                             |
-| --- | ------------------------------------ | --------------- | ---------------------- | -------------------------------------------------------------------------------------------------- |
-| 1   | Water Potability                     | Potability      | Binary Classification  | [Kaggle](https://www.kaggle.com/datasets/adityakadiwal/water-potability)                           |
-| 2   | Machine Predictive Maintenance       | Target          | Binary Classification  | [Kaggle](https://www.kaggle.com/datasets/shivamb/machine-predictive-maintenance-classification)    |
-| 3   | Heart Attack Analysis and Prediction | output          | Binary Classification  | [Kaggle](https://www.kaggle.com/datasets/sonialikhan/heart-attack-analysis-and-prediction-dataset) |
+Dataset yang digunakan adalah **Medical Insurance Dataset**.
 
-## 2. Multiclass Classification
+| Informasi                  | Keterangan      |
+| -------------------------- | --------------- |
+| File                       | `insurance.csv` |
+| Jumlah data awal           | 1,338 baris     |
+| Jumlah kolom               | 7               |
+| Jumlah fitur               | 6               |
+| Target                     | `charges`       |
+| Missing Value              | 0               |
+| Data setelah preprocessing | 1,192 baris     |
 
-Multiclass Classification merupakan metode Machine Learning yang digunakan untuk mengelompokkan data ke dalam lebih dari dua kelas yang berbeda.
+### Features
 
-| No. | Nama Dataset        | Variabel Target | Jenis Machine Learning    | Sumber                                                                             |
-| --- | ------------------- | --------------- | ------------------------- | ---------------------------------------------------------------------------------- |
-| 1   | Vehicle Dataset     | Class           | Multiclass Classification | [Kaggle](https://www.kaggle.com/datasets/rajansharma780/vehicle)                   |
-| 2   | Dry Bean Dataset    | Class           | Multiclass Classification | [Kaggle](https://www.kaggle.com/datasets/muratkokludataset/dry-bean-dataset)       |
-| 3   | Crop Harvest Period | Harvest Period  | Multiclass Classification | [Kaggle](https://www.kaggle.com/datasets/willianoliveiragibin/crop-harvest-period) |
+- `age` — usia peserta
+- `sex` — jenis kelamin
+- `bmi` — Body Mass Index
+- `children` — jumlah anak/dependen
+- `smoker` — status merokok
+- `region` — wilayah tempat tinggal
+- `charges` — biaya asuransi sebagai target
 
-## 3. Multilabel Classification
+---
 
-Multilabel Classification merupakan metode Machine Learning yang memungkinkan satu data memiliki lebih dari satu label secara bersamaan.
+## 🔬 Machine Learning Workflow
 
-| No. | Nama Dataset                                 | Variabel Target              | Jenis Machine Learning    | Sumber                                                                                         |
-| --- | -------------------------------------------- | ---------------------------- | ------------------------- | ---------------------------------------------------------------------------------------------- |
-| 1   | Multilabel Classification Emotions           | Emotion Labels               | Multilabel Classification | [Kaggle](https://www.kaggle.com/datasets/srinivas365/multilabel-classification-emotions)       |
-| 2   | arXiv Dataset                                | Categories                   | Multilabel Classification | [Kaggle](https://www.kaggle.com/datasets/Cornell-University/arxiv)                             |
-| 3   | Bangla YouTube Sentiment and Emotion Dataset | Sentiment and Emotion Labels | Multilabel Classification | [Kaggle](https://www.kaggle.com/datasets/nit003/bangla-youtube-sentiment-and-emotion-datasets) |
+Project ini dilakukan melalui beberapa tahapan:
 
-## 4. Tujuan Repository
+```text
+Dataset
+   ↓
+Data Loading
+   ↓
+Data Understanding
+   ↓
+Data Cleaning
+   ↓
+Outlier Detection
+   ↓
+Outlier Filtering
+   ↓
+Standardization
+   ↓
+Duplicate Checking
+   ↓
+Encoding
+   ↓
+EDA & Correlation
+   ↓
+Train-Test Split
+   ↓
+Model Training
+   ↓
+Model Evaluation
+   ↓
+Model Selection
+   ↓
+Model Saving
+   ↓
+Flask Deployment
+```
 
-Repository ini dibuat untuk mengumpulkan dan mengelompokkan dataset berdasarkan jenis permasalahan Machine Learning. Pengelompokan tersebut bertujuan untuk memahami perbedaan Binary Classification, Multiclass Classification, dan Multilabel Classification serta mengetahui karakteristik data yang dapat digunakan dalam proses pemodelan.
+---
 
-## 5. Sumber Dataset
+## 🤖 Models
 
-Seluruh dataset yang digunakan dalam repository ini bersumber dari Kaggle. Setiap dataset dilengkapi dengan tautan menuju halaman sumber agar dapat diperiksa dan diunduh sesuai kebutuhan.
+Tiga model regresi digunakan untuk membandingkan performa:
+
+- Least Angle Regression (LARS)
+- Linear Regression
+- Gradient Boosting Regressor
+
+### Model Evaluation
+
+| Model                 |        MAE |        MSE |         R² |
+| --------------------- | ---------: | ---------: | ---------: |
+| LARS                  |     0.7391 |     0.9353 |     0.1567 |
+| Linear Regression     |     0.3798 |     0.4420 |     0.6014 |
+| **Gradient Boosting** | **0.3323** | **0.3946** | **0.6442** |
+
+Berdasarkan hasil evaluasi, **Gradient Boosting Regressor** menjadi model terbaik karena menghasilkan nilai MAE dan MSE paling rendah serta R² paling tinggi.
+
+---
+
+## 📈 Feature Analysis
+
+Berdasarkan analisis korelasi pada dataset, variabel yang memiliki hubungan paling kuat dengan `charges` adalah:
+
+| Variable   | Correlation |
+| ---------- | ----------: |
+| `smoker`   |    0.602377 |
+| `age`      |    0.436059 |
+| `region`   |    0.090858 |
+| `children` |    0.082308 |
+| `bmi`      |    0.060969 |
+| `sex`      |    0.021548 |
+
+Variabel `smoker` memiliki korelasi paling kuat terhadap biaya asuransi, kemudian diikuti oleh `age`.
+
+---
+
+## 💾 Model
+
+Model terbaik disimpan menggunakan Joblib:
+
+```text
+gbr_model_medical_insurance.joblib
+```
+
+Model dapat dimuat kembali menggunakan:
+
+```python
+import joblib
+
+model = joblib.load(
+    'gbr_model_medical_insurance.joblib'
+)
+```
+
+---
+
+## 🚀 Deployment
+
+Model disiapkan untuk digunakan melalui **Flask REST API**.
+
+Endpoint:
+
+```text
+POST /predict
+```
+
+Server lokal:
+
+```text
+http://127.0.0.1:5000
+```
+
+API menerima data peserta dan menghasilkan prediksi biaya asuransi.
+
+Contoh input:
+
+```json
+{
+  "data": [[19, 0, 27.9, 0, 1, 0]]
+}
+```
+
+Urutan fitur:
+
+```text
+age
+bmi
+children
+sex
+smoker
+region
+```
+
+Contoh menjalankan Flask:
+
+```bash
+python app.py
+```
+
+---
+
+## 📁 Project Structure
+
+```text
+Medical-Insurance/
+│
+├── insurance.csv
+├── Medical Insurance.ipynb
+├── gbr_model_medical_insurance.joblib
+├── app.py
+├── medical_insurance.md
+└── README.md
+```
+
+---
+
+## 📚 Documentation
+
+Dokumentasi lengkap mengenai proses:
+
+- Data Loading
+- Data Cleaning
+- EDA
+- Outlier Detection
+- Standardization
+- Encoding
+- Correlation Analysis
+- Data Splitting
+- Modeling
+- Evaluation
+- Model Saving
+- Flask Deployment
+
+dapat dilihat pada:
+
+**[`medical_insurance.md`](medical_insurance.md)**
+
+---
+
+## 🛠️ Technologies
+
+Project ini menggunakan:
+
+```text
+Python
+Pandas
+NumPy
+Matplotlib
+Seaborn
+Scikit-Learn
+Joblib
+Flask
+```
+
+---
+
+## 🎯 Conclusion
+
+Project ini berhasil membangun model Machine Learning untuk memprediksi biaya asuransi kesehatan.
+
+Dari tiga model yang diuji, **Gradient Boosting Regressor** memberikan hasil terbaik dengan **MAE 0.3323, MSE 0.3946, dan R² 0.6442**.
+
+Model tersebut kemudian disimpan menggunakan Joblib dan disiapkan untuk digunakan melalui Flask REST API.
+
+---
+
+## 👨‍💻 Project
+
+**Medical Insurance Cost Prediction**
+
+Machine Learning — Regression  
+Dataset: Medical Insurance
