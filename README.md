@@ -1,25 +1,43 @@
-# Analisis Dataset Machine Learning
+# REPOSITORY DATASET MACHINE LEARNING
 
-Repository ini berisi kumpulan dataset yang digunakan untuk pembelajaran dan analisis Machine Learning.
+## Deskripsi
 
-## Kategori Dataset
+Repository ini berisi kumpulan dataset yang diperoleh dari Kaggle untuk keperluan pembelajaran dan identifikasi jenis permasalahan dalam Machine Learning. Dataset dikelompokkan menjadi tiga kategori, yaitu Binary Classification, Multiclass Classification, dan Multilabel Classification.
 
-### 1. Binary Classification
+## 1. Binary Classification
 
-Berisi dataset dengan dua kelas atau kategori target.
+Binary Classification merupakan metode Machine Learning yang digunakan untuk mengelompokkan data ke dalam dua kelas atau kategori.
 
-### 2. Multiclass Classification
+| No. | Nama Dataset                         | Variabel Target | Jenis Machine Learning | Sumber                                                                                             |
+| --- | ------------------------------------ | --------------- | ---------------------- | -------------------------------------------------------------------------------------------------- |
+| 1   | Water Potability                     | Potability      | Binary Classification  | [Kaggle](https://www.kaggle.com/datasets/adityakadiwal/water-potability)                           |
+| 2   | Machine Predictive Maintenance       | Target          | Binary Classification  | [Kaggle](https://www.kaggle.com/datasets/shivamb/machine-predictive-maintenance-classification)    |
+| 3   | Heart Attack Analysis and Prediction | output          | Binary Classification  | [Kaggle](https://www.kaggle.com/datasets/sonialikhan/heart-attack-analysis-and-prediction-dataset) |
 
-Berisi dataset dengan lebih dari dua kelas target.
+## 2. Multiclass Classification
 
-### 3. Multilabel Classification
+Multiclass Classification merupakan metode Machine Learning yang digunakan untuk mengelompokkan data ke dalam lebih dari dua kelas yang berbeda.
 
-Berisi dataset yang memungkinkan satu data memiliki lebih dari satu label.
+| No. | Nama Dataset        | Variabel Target | Jenis Machine Learning    | Sumber                                                                             |
+| --- | ------------------- | --------------- | ------------------------- | ---------------------------------------------------------------------------------- |
+| 1   | Vehicle Dataset     | Class           | Multiclass Classification | [Kaggle](https://www.kaggle.com/datasets/rajansharma780/vehicle)                   |
+| 2   | Dry Bean Dataset    | Class           | Multiclass Classification | [Kaggle](https://www.kaggle.com/datasets/muratkokludataset/dry-bean-dataset)       |
+| 3   | Crop Harvest Period | Harvest Period  | Multiclass Classification | [Kaggle](https://www.kaggle.com/datasets/willianoliveiragibin/crop-harvest-period) |
 
-## Sumber Dataset
+## 3. Multilabel Classification
 
-Dataset diperoleh dari Kaggle dan sumber dataset publik lainnya.
+Multilabel Classification merupakan metode Machine Learning yang memungkinkan satu data memiliki lebih dari satu label secara bersamaan.
 
-## Tujuan
+| No. | Nama Dataset                                 | Variabel Target              | Jenis Machine Learning    | Sumber                                                                                         |
+| --- | -------------------------------------------- | ---------------------------- | ------------------------- | ---------------------------------------------------------------------------------------------- |
+| 1   | Multilabel Classification Emotions           | Emotion Labels               | Multilabel Classification | [Kaggle](https://www.kaggle.com/datasets/srinivas365/multilabel-classification-emotions)       |
+| 2   | arXiv Dataset                                | Categories                   | Multilabel Classification | [Kaggle](https://www.kaggle.com/datasets/Cornell-University/arxiv)                             |
+| 3   | Bangla YouTube Sentiment and Emotion Dataset | Sentiment and Emotion Labels | Multilabel Classification | [Kaggle](https://www.kaggle.com/datasets/nit003/bangla-youtube-sentiment-and-emotion-datasets) |
 
-Repository ini dibuat untuk keperluan pembelajaran, eksplorasi data, dan praktik penerapan algoritma Machine Learning.
+## 4. Tujuan Repository
+
+Repository ini dibuat untuk mengumpulkan dan mengelompokkan dataset berdasarkan jenis permasalahan Machine Learning. Pengelompokan tersebut bertujuan untuk memahami perbedaan Binary Classification, Multiclass Classification, dan Multilabel Classification serta mengetahui karakteristik data yang dapat digunakan dalam proses pemodelan.
+
+## 5. Sumber Dataset
+
+Seluruh dataset yang digunakan dalam repository ini bersumber dari Kaggle. Setiap dataset dilengkapi dengan tautan menuju halaman sumber agar dapat diperiksa dan diunduh sesuai kebutuhan.
