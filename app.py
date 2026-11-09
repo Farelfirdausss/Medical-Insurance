@@ -1,51 +1,43 @@
 import streamlit as st
 import pandas as pd
-import joblib
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.model_selection import train_test_split
 
-model = joblib.load("gbr_model_medical_insurance.joblib")
+st.title("Prediksi Biaya Asuransi Kesehatan")
 
-st.set_page_config(page_title="Medical Insurance Prediction", page_icon="🏥")
-st.title("🏥 Prediksi Biaya Asuransi Kesehatan")
-st.write("Masukkan data pasien untuk memprediksi biaya asuransi (charges)")
+# Baca data & latih langsung di sini, gak pake .joblib
+df = pd.read_csv("insurance.csv")
+df = pd.get_dummies(df, columns=["sex", "smoker", "region"], drop_first=True)
 
-col1, col2 = st.columns(2)
+X = df.drop("charges", axis=1)
+y = df["charges"]
+model = GradientBoostingRegressor(random_state=42)
+model.fit(X, y)
 
-with col1:
-    age = st.slider("Umur (age)", 18, 100, 30)
-    bmi = st.number_input("BMI", 10.0, 60.0, 25.0)
-    children = st.number_input("Jumlah Anak (children)", 0, 5, 0)
+age = st.slider("Umur", 18, 64, 30)
+bmi = st.number_input("BMI", 15.0, 50.0, 25.0)
+children = st.slider("Jumlah Anak", 0, 5, 0)
+sex = st.selectbox("Jenis Kelamin", ["male", "female"])
+smoker = st.selectbox("Perokok?", ["yes", "no"])
+region = st.selectbox("Region", ["southwest", "southeast", "northwest", "northeast"])
 
-with col2:
-    sex = st.selectbox("Jenis Kelamin (sex)", ["male", "female"])
-    smoker = st.selectbox("Perokok? (smoker)", ["no", "yes"])
-    region = st.selectbox("Wilayah (region)", ["southwest", "southeast", "northwest", "northeast"])
+if st.button("Prediksi Biaya"):
+    data = {
+        "age": [age],
+        "bmi": [bmi],
+        "children": [children],
+        "sex_male": [1 if sex == "male" else 0],
+        "smoker_yes": [1 if smoker == "yes" else 0],
+        "region_northwest": [1 if region == "northwest" else 0],
+        "region_southeast": [1 if region == "southeast" else 0],
+        "region_southwest": [1 if region == "southwest" else 0],
+    }
+    # Samakan kolom dengan yang dipakai training
+    input_df = pd.DataFrame(data)
+    for col in X.columns:
+        if col not in input_df.columns:
+            input_df[col] = 0
+    input_df = input_df[X.columns]
 
-if st.button("Prediksi Biaya", use_container_width=True):
-    # 1. Ngintip dulu, model lu dilatih pake kolom apa aja?
-    fitur_model = list(model.feature_names_in_)
-
-    # 2. Bikin semua kolom jadi 0 dulu
-    data_dict = {f: [0] for f in fitur_model}
-
-    # 3. Isi yang angka
-    if 'age' in data_dict:
-        data_dict['age'] = [age]
-    if 'bmi' in data_dict:
-        data_dict['bmi'] = [bmi]
-    if 'children' in data_dict:
-        data_dict['children'] = [children]
-
-    # 4. Isi yang kategori, diubah jadi 1 kalo cocok
-    for f in fitur_model:
-        if f == f"sex_{sex}":
-            data_dict[f] = [1]
-        if f == f"smoker_{smoker}":
-            data_dict[f] = [1]
-        if f == f"region_{region}":
-            data_dict[f] = [1]
-
-    data = pd.DataFrame(data_dict)[fitur_model]
-    prediksi = model.predict(data)[0]
-
-    st.success(f"💰 Estimasi Biaya Asuransi: **${prediksi:,.2f}**")
-    st.write(f"Atau sekitar Rp {prediksi * 16000:,.0f}")
+    pred = model.predict(input_df)[0]
+    st.success(f"💰 Estimasi Biaya Asuransi: ${pred:,.2f}")
